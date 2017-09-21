@@ -52,5 +52,26 @@ namespace Org.Unidal.Cat
         public const String LOG_ENABLE = "LogEnabled";
         public const String CAT_HOME = @"D:\data\applogs";
         public const String CAT_HOME_TEMP = @"D:\data\applogs\cat";
+
+        /**
+         *  DurationRang
+         */
+        public static List<KeyValuePair<long, String>> DURATION_LIST = new List<KeyValuePair<long, String>> 
+        {
+            new KeyValuePair<long, String>(10,"0~10ms"),
+            new KeyValuePair<long, String>(50,"10~50ms"),
+            new KeyValuePair<long, String>(100,"50~100ms"),
+            new KeyValuePair<long, String>(200,"100~200ms"),
+            new KeyValuePair<long, String>(500,"200~500ms"),
+            new KeyValuePair<long, String>(1000,"500ms~1s"),
+            new KeyValuePair<long, String>(5000,"1~5s"),
+            new KeyValuePair<long, String>(10000,"5~10s"),
+            new KeyValuePair<long, String>(20000,"10~20s"),
+            new KeyValuePair<long, String>(30000,"20~30s"),
+            new KeyValuePair<long, String>(50000,"30~50s"),
+            new KeyValuePair<long, String>(120000,"50~120s"),
+            new KeyValuePair<long, String>(300000,"2~5m"),
+            new KeyValuePair<long, String>(600000,"5~10m"),
+        };
     }
 }

@@ -11,6 +11,7 @@ using System;
 using System.Text;
 using System.Threading;
 using System.Globalization;
+using System.Diagnostics;
 
 namespace Org.Unidal.Cat
 {
@@ -262,6 +263,28 @@ namespace Org.Unidal.Cat
         {
             try { Cat.GetProducer().LogEvent(type, name, status, null); }
             catch (Exception ex) { Cat.lastException = ex; }
+        }
+
+        public static void LogEventDuration(Stopwatch watch, string name)
+        {
+            try
+            {
+                watch.Stop();
+                foreach (var rang in CatConstants.DURATION_LIST)
+                {
+                    if (rang.Key > watch.ElapsedMilliseconds)
+                    {
+                        Cat.LogEvent(rang.Value, name);
+                        return;
+                    }
+                }
+                Cat.LogEvent(">10m", name);
+                return;
+            }
+            catch (Exception ex) 
+            { 
+                Cat.lastException = ex; 
+            }
         }
 
         public static void LogEvent(string type, string name)

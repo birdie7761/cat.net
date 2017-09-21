@@ -1,12 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
+<config mode="client" enabled="true" queue-size="123" max-queue-size="1000" max-queue-byte-size="268435456">
+  <!--logEnabled enabled="true"></logEnabled-->
 
-<doc>
-  <domain id="123456" ip="" enabled="true" />
-  <logEnabled enabled="true" />
+  <!-- 配置Domain ID-->
+  <domain id="NHCat" enabled="true" />
+
   <servers>
-    <!--server ip="127.0.0.1" port="2280" /-->
-    <!--server ip="192.168.83.100" port="2280" /-->
-    <server ip="10.2.6.98" port="2280" />
-    <server ip="10.2.6.99" port="2280" />
+    <!-- 配置CAT服务器地址-->
+    <server ip="172.20.70.78" port="2280" http-port="8080"></server>
+    <server ip="172.20.70.79" port="2280" http-port="8080"></server>
+    <server ip="172.20.70.80" port="2280" http-port="8080"></server>
   </servers>
-</doc>
+</config>

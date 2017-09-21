@@ -5,6 +5,7 @@ using System.Threading;
 using CatClientTest.PerformanceTest;
 using System.Collections.Generic;
 using Org.Unidal.Cat.Message;
+using System.Diagnostics;
 
 namespace CatClientTest
 {
@@ -33,6 +34,7 @@ namespace CatClientTest
             Console.WriteLine("Start: " + DateTime.Now);
             ITransaction newOrderTransaction = null;
             ITransaction paymentTransaction = null;
+            Stopwatch duration = Stopwatch.StartNew();
             try
             {
                 newOrderTransaction = Cat.NewTransaction("SimpleTest", "NewTrainOrder");
@@ -54,7 +56,7 @@ namespace CatClientTest
                 {
                     paymentTransaction.Complete();
                 }
-
+                Cat.LogEventDuration(duration, "SimpleTest");
                 newOrderTransaction.Status = CatConstants.SUCCESS;
             }
             catch (Exception ex)
