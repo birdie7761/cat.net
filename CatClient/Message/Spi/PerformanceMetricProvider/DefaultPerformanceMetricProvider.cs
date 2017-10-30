@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Diagnostics;
 using Org.Unidal.Cat.Util;
+using System.IO;
 
 namespace Org.Unidal.Cat.Message.Spi.Internals
 {
@@ -217,8 +218,11 @@ namespace Org.Unidal.Cat.Message.Spi.Internals
 
         private static string GetProcessInstanceName(int pid)
         {
+            var process = Process.GetProcessById(pid);
+            string processName = Path.GetFileNameWithoutExtension(process.ProcessName);
+
             PerformanceCounterCategory cat = new PerformanceCounterCategory("Process");
-            string[] instances = cat.GetInstanceNames();
+            string[] instances = cat.GetInstanceNames().Where(inst => inst.StartsWith(processName)).ToArray();
             foreach (string instance in instances)
             {
                 using (PerformanceCounter cnt = new PerformanceCounter("Process", "ID Process", instance, true))

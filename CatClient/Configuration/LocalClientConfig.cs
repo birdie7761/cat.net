@@ -13,6 +13,7 @@ namespace Org.Unidal.Cat.Configuration
     // CAT clienet config, which is loaded from a local XML file.
     class LocalClientConfig : AbstractClientConfig
     {
+        object oLock = new object();
         int curServersIdx;
         public LocalClientConfig(string configFile)
         {
@@ -26,19 +27,22 @@ namespace Org.Unidal.Cat.Configuration
 
         protected override string GetCatRouterServiceURL(bool sync)
         {
-            if (Servers.Count > 0)
+            lock(oLock)
             {
-                if (curServersIdx > Servers.Count)
+                if (Servers.Count > 0)
                 {
-                    curServersIdx = 0;
+                    if (curServersIdx >= Servers.Count)
+                    {
+                        curServersIdx = 0;
+                    }
+                    Server server = Servers[curServersIdx];
+                    curServersIdx++;
+                    // http://192.168.183.100:8080/cat/s/router
+                    return "http://" + server.Ip + ":" + server.HttpPort + "/cat/s/router";
                 }
-                Server server = Servers[curServersIdx];
-                curServersIdx++;
-                // http://192.168.183.100:8080/cat/s/router
-                return "http://" + server.Ip + ":" + server.HttpPort + "/cat/s/router";
+                else
+                    return null;
             }
-            else
-                return null;
         }
 
         private string GetDomainId()
